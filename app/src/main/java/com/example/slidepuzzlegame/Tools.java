@@ -50,19 +50,4 @@ public class Tools {
                         .error(R.drawable.baseline_error_24))
                 .into(img);
     }
-
-//    public static void DisplayImageWithDelay(Context context, ImageView img, String urlImg, long delayMillis) {
-//        // Show loading placeholder immediately
-//        img.setImageResource(R.drawable.user_icon);
-//
-//        // Use a Handler to introduce a delay before loading the actual image
-//        new Handler().postDelayed(() -> {
-//            Glide.with(context)
-//                    .load(urlImg)
-//                    .apply(new RequestOptions()
-//                            .error(R.drawable.baseline_error_24))
-//                    .into(img);
-//        }, delayMillis);
-//    }
-
 }

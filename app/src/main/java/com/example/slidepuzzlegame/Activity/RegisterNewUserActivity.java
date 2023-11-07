@@ -59,9 +59,9 @@ public class RegisterNewUserActivity extends AppCompatActivity {
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!etvUserName.getText().toString().trim().isEmpty() && !imgUser.toString().trim().isEmpty()) {
+                if (!etvUserName.getText().toString().trim().isEmpty()) {
                     MyDatabaseHandler myDatabaseHandler = new MyDatabaseHandler(RegisterNewUserActivity.this);
-                    myDatabaseHandler.insertData(etvUserName.getText().toString().trim(), imgUser.toString().trim());
+                    myDatabaseHandler.insertData(etvUserName.getText().toString().trim(), currentPhotoPath);
                     Toast.makeText(RegisterNewUserActivity.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
 
                     Intent intent = new Intent(RegisterNewUserActivity.this, GameScreenActivity.class);
@@ -78,9 +78,11 @@ public class RegisterNewUserActivity extends AppCompatActivity {
         cameraLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getResultCode() == RESULT_OK) {
 
+//                Tools.DisplayImage(RegisterNewUserActivity.this, imgUser, currentPhotoPath);
+
                 new android.os.Handler().postDelayed(() -> {
                     Tools.DisplayImage(RegisterNewUserActivity.this, imgUser, currentPhotoPath);
-                },1000);
+                }, 1000);
 
             } else {
                 Toast.makeText(this, "Can't Complete The Action", Toast.LENGTH_SHORT).show();

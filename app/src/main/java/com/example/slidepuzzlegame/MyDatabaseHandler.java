@@ -20,6 +20,13 @@ public class MyDatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_NAME = "Name";
     private static final String KEY_IMAGE = "User_Image";
 
+    private static final String TABLE_SCORE = "Scores";
+    private static final String KEY_SCORE_ID = "Id";
+    private static final String KEY_USER_ID = "UserId";
+    private static final String KEY_USER_NAME = "UserName";
+    private static final int KEY_MOVES = Integer.parseInt("Moves");
+    private static final int KEY_TIME = Integer.parseInt("Time");
+
 
     public MyDatabaseHandler(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -27,12 +34,21 @@ public class MyDatabaseHandler extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        String CREATE_TABLE = "CREATE TABLE " + TABLE_USERS + "("
+        String CREATE_TABLE_USER = "CREATE TABLE " + TABLE_USERS + "("
                 + KEY_ID + " INTEGER PRIMARY KEY,"
                 + KEY_NAME + " TEXT,"
                 + KEY_IMAGE + " BLOB"
                 + ")";
-        sqLiteDatabase.execSQL(CREATE_TABLE);
+        sqLiteDatabase.execSQL(CREATE_TABLE_USER);
+
+        String CREATE_TABLE_SCORE = "CREATE TABLE " + TABLE_SCORE + "("
+                + KEY_SCORE_ID + " INTEGER PRIMARY KEY,"
+                + KEY_USER_ID + " INTEGER,"
+                + KEY_USER_NAME + " TEXT,"
+                + KEY_MOVES + " INTEGER,"
+                + KEY_TIME + " INTEGER"
+                + ")";
+        sqLiteDatabase.execSQL(CREATE_TABLE_SCORE);
     }
 
     @Override
@@ -69,6 +85,12 @@ public class MyDatabaseHandler extends SQLiteOpenHelper {
         db.close();
 
         return userList;
+    }
+
+    public void deleteData(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_USERS, KEY_ID + "=?", new String[]{String.valueOf(id)});
+        db.close();
     }
 
 }
