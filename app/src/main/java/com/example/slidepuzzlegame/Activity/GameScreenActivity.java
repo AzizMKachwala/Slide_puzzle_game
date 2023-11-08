@@ -27,7 +27,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class GameScreenActivity extends AppCompatActivity {
 
     //    Button btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9;
-    Button btnShuffle, btnSolve;
+    Button btnShuffle, btnSolve, btnPause;
     TextView txtMovesCount, txtTimeCount, txtUserNameGot;
     ImageView imgBack, imgSetting;
     CircleImageView imgUserImageGot;
@@ -43,6 +43,8 @@ public class GameScreenActivity extends AppCompatActivity {
     private Timer timer;
     private boolean isFirstMove = true;
     MyDatabaseHandler myDatabaseHandler;
+    private boolean isGamePaused = false;
+
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -65,12 +67,16 @@ public class GameScreenActivity extends AppCompatActivity {
         gridGroup = findViewById(R.id.gridGroup);
         btnShuffle = findViewById(R.id.btnShuffle);
         btnSolve = findViewById(R.id.btnSolve);
+        btnPause = findViewById(R.id.btnPause);
         imgBack = findViewById(R.id.imgBack);
         imgSetting = findViewById(R.id.imgSetting);
         imgUserImageGot = findViewById(R.id.imgUserImageGot);
         txtMovesCount = findViewById(R.id.txtMovesCount);
         txtTimeCount = findViewById(R.id.txtTimeCount);
         txtUserNameGot = findViewById(R.id.txtUserNameGot);
+
+        btnPause.setEnabled(false);
+        btnShuffle.setEnabled(false);
 
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,14 +94,35 @@ public class GameScreenActivity extends AppCompatActivity {
             }
         });
 
+        btnPause.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isGamePaused) {
+                    isGamePaused = false;
+                    btnPause.setText("PAUSE");
+                    loadTimer();
+                    for (int i = 0; i < gridGroup.getChildCount(); i++) {
+                        buttons[i / 3][i % 3].setClickable(true);
+                    }
+                } else {
+                    isGamePaused = true;
+                    btnPause.setText("RESUME");
+                    if (timer != null) {
+                        timer.cancel();
+                    }
+                    for (int i = 0; i < gridGroup.getChildCount(); i++) {
+                        buttons[i / 3][i % 3].setClickable(false);
+                    }
+                }
+            }
+        });
+
         String Name = getIntent().getStringExtra("Name");
         String ImagePath = getIntent().getStringExtra("ImagePath");
 
         txtUserNameGot.setText(Name);
         if (ImagePath != null && !ImagePath.isEmpty()) {
-            new android.os.Handler().postDelayed(() -> {
-                Tools.DisplayImage(GameScreenActivity.this, imgUserImageGot, ImagePath);
-            }, 1000);
+            Tools.DisplayImage(GameScreenActivity.this, imgUserImageGot, ImagePath);
         }
 
         imgSetting.setOnClickListener(new View.OnClickListener() {
@@ -142,7 +169,6 @@ public class GameScreenActivity extends AppCompatActivity {
 //        // Set the last element to 0 (empty block)
 //        tiles[tiles.length - 1] = 0;
 //
-//        // Reload data to view
 //        loadDataToView();
 //
 //        myDatabaseHandler = new MyDatabaseHandler(GameScreenActivity.this);
@@ -157,13 +183,13 @@ public class GameScreenActivity extends AppCompatActivity {
 //        timeCount = 0;
 //        txtTimeCount.setText("Time: 00:00");
 //
-//        // Cancel the timer if it's running
 //        if (timer != null) {
 //            timer.cancel();
 //        }
 //
-//        // Reset the first move flag
 //        isFirstMove = true;
+//        btnShuffle.setEnabled(false);
+//        btnPause.setEnabled(false);
 //
 //    }
 
@@ -214,63 +240,87 @@ public class GameScreenActivity extends AppCompatActivity {
         }
     }
 
-    private void generateNumbers() {
-        int n = 8;
-        Random random = new Random();
-
-        while (n > 1) {
-            int randomNum = random.nextInt(n--);
-            int temp = tiles[randomNum];
-            tiles[randomNum] = tiles[n];
-            tiles[n] = temp;
-        }
-        if (isSolvable())
-            generateNumbers();
-    }
-
     private boolean isSolvable() {
-        int countInversions = 0;
+        int countInversion = 0;
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < i; j++) {
-                if (tiles[j] > tiles[i])
-                    countInversions++;
+                if (tiles[j] > tiles[i] && tiles[i] != 0 && tiles[j] != 0) {
+                    countInversion++;
+                }
             }
         }
-        return countInversions % 2 == 0;
+        return countInversion % 2 == 0;
+    }
+
+    private void generateNumbers() {
+        int n = 9;
+        Random random = new Random();
+        for (int i = 0; i < n - 1; i++) {
+            tiles[i] = i + 1;
+        }
+        tiles[n - 1] = 0; // Set the last tile as empty
+        int lastIndex = n - 1;
+
+        for (int i = 0; i < n - 1; i++) {
+            int randomIndex = random.nextInt(n - 1);
+            int temp = tiles[i];
+            tiles[i] = tiles[randomIndex];
+            tiles[randomIndex] = temp;
+
+            if (tiles[i] == 0) {
+                emptyX = i / 3;
+                emptyY = i % 3;
+            }
+
+            if (tiles[randomIndex] == 0) {
+                emptyX = randomIndex / 3;
+                emptyY = randomIndex % 3;
+            }
+        }
+
+        if (!isSolvable()) {
+            int temp = tiles[lastIndex - 1];
+            tiles[lastIndex - 1] = tiles[lastIndex - 2];
+            tiles[lastIndex - 2] = temp;
+        }
     }
 
     private void loadDataToView() {
-        emptyX = 2;
-        emptyY = 2;
-        for (int i = 0; i < gridGroup.getChildCount() - 1; i++) {
-            buttons[i / 3][i % 3].setText(String.valueOf(tiles[i]));
-            buttons[i / 3][i % 3].setBackgroundResource(android.R.drawable.btn_default);
+        for (int i = 0; i < gridGroup.getChildCount(); i++) {
+            int x = i / 3;
+            int y = i % 3;
+            buttons[x][y].setText(String.valueOf(tiles[i]));
+            buttons[x][y].setBackgroundColor(ContextCompat.getColor(this, android.R.color.background_light));
         }
         buttons[emptyX][emptyY].setText("");
-        buttons[emptyX][emptyY].setBackgroundColor(ContextCompat.getColor(this, R.color.white));
+        buttons[emptyX][emptyY].setBackgroundColor(ContextCompat.getColor(this, android.R.color.darker_gray));
     }
 
     public void buttonClick(View view) {
-        Button button = (Button) view;
-        String tag = button.getTag().toString();
-        int x = Character.getNumericValue(tag.charAt(0)); // Extract row from the tag
-        int y = Character.getNumericValue(tag.charAt(1)); // Extract column from the tag
+        if (!isGamePaused) {
+            Button button = (Button) view;
+            String tag = button.getTag().toString();
+            int x = Character.getNumericValue(tag.charAt(0)); // Extract row from the tag
+            int y = Character.getNumericValue(tag.charAt(1)); // Extract column from the tag
 
-        if (isFirstMove) {
-            isFirstMove = false;
-            loadTimer();
-        }
+            if (isFirstMove) {
+                isFirstMove = false;
+                btnPause.setEnabled(true);
+                btnShuffle.setEnabled(true);
+                loadTimer();
+            }
 
-        if ((Math.abs(emptyX - x) == 1 && emptyY == y) || (Math.abs(emptyY - y) == 1 && emptyX == x)) {
-            buttons[emptyX][emptyY].setText(button.getText().toString());
-            buttons[emptyX][emptyY].setBackgroundResource(android.R.drawable.btn_default);
-            button.setText("");
-            button.setBackgroundColor(ContextCompat.getColor(this, com.google.android.material.R.color.design_default_color_background));
-            emptyX = x;
-            emptyY = y;
-            movesCount++;
-            txtMovesCount.setText("Moves: " + movesCount);
-            checkWin();
+            if ((Math.abs(emptyX - x) == 1 && emptyY == y) || (Math.abs(emptyY - y) == 1 && emptyX == x)) {
+                buttons[emptyX][emptyY].setText(button.getText().toString());
+                buttons[emptyX][emptyY].setBackgroundResource(android.R.drawable.btn_default);
+                button.setText("");
+                button.setBackgroundColor(ContextCompat.getColor(this, com.google.android.material.R.color.design_default_color_background));
+                emptyX = x;
+                emptyY = y;
+                movesCount++;
+                txtMovesCount.setText("Moves: " + movesCount);
+                checkWin();
+            }
         }
     }
 
@@ -278,11 +328,11 @@ public class GameScreenActivity extends AppCompatActivity {
         boolean isWin = false;
         if (emptyX == 2 && emptyY == 2) {
             for (int i = 0; i < gridGroup.getChildCount() - 1; i++) {
-                if (buttons[i / 3][i % 3].getText().toString().equals(String.valueOf(i))) {
-                    isWin = true;
-                } else {
+                if (!buttons[i / 3][i % 3].getText().toString().equals(String.valueOf(i + 1))) {
                     isWin = false;
                     break;
+                } else {
+                    isWin = true;
                 }
             }
         }
@@ -290,9 +340,10 @@ public class GameScreenActivity extends AppCompatActivity {
             Toast.makeText(this, "Win!!!/nMoves: " + movesCount, Toast.LENGTH_SHORT).show();
             for (int i = 0; i < gridGroup.getChildCount(); i++) {
                 buttons[i / 3][i % 3].setClickable(false);
+                timer.cancel();
+                btnPause.setEnabled(false);
+                btnShuffle.setEnabled(false);
             }
-            timer.cancel();
-            btnShuffle.setClickable(false);
         }
     }
 

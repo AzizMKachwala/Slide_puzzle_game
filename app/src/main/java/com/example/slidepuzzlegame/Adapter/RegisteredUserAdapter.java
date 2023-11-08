@@ -17,6 +17,7 @@ import androidx.collection.CircularArray;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.slidepuzzlegame.Activity.GameScreenActivity;
+import com.example.slidepuzzlegame.Activity.HistoryActivity;
 import com.example.slidepuzzlegame.MyDatabaseHandler;
 import com.example.slidepuzzlegame.MyDatabaseModel;
 import com.example.slidepuzzlegame.R;
@@ -85,6 +86,15 @@ public class RegisteredUserAdapter extends RecyclerView.Adapter<RegisteredUserAd
             }
         });
 
+        holder.btnViewHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, HistoryActivity.class);
+                intent.putExtra("Name", myDatabaseModel.getName());
+                intent.putExtra("ImagePath", myDatabaseModel.getImage());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

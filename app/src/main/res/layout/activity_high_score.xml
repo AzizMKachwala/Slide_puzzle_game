@@ -21,10 +21,12 @@
         android:id="@+id/highScoreRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/_5sdp"
-        android:layout_margin="@dimen/_10sdp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"/>
+        android:layout_centerInParent="true"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:padding="@dimen/_5sdp" />
 
     <Button
         android:id="@+id/btnClose"

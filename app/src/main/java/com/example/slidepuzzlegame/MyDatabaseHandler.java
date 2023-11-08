@@ -102,6 +102,31 @@ public class MyDatabaseHandler extends SQLiteOpenHelper {
         return scoreList;
     }
 
+    public ArrayList<MyDatabaseScoreModel> getUserHistory(int userId) {
+        ArrayList<MyDatabaseScoreModel> userHistoryList = new ArrayList<>();
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String query = "SELECT * FROM " + TABLE_SCORE + " WHERE " + KEY_USER_ID + " = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(userId)});
+
+        if (cursor.moveToFirst()) {
+            do {
+                @SuppressLint("Range") int scoreId = cursor.getInt(cursor.getColumnIndex(KEY_SCORE_ID));
+                @SuppressLint("Range") int moves = cursor.getInt(cursor.getColumnIndex(KEY_MOVES));
+                @SuppressLint("Range") int timeTaken = cursor.getInt(cursor.getColumnIndex(KEY_TIME));
+
+                MyDatabaseScoreModel userHistory = new MyDatabaseScoreModel(scoreId, userId, moves, timeTaken);
+                userHistoryList.add(userHistory);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+
+        return userHistoryList;
+    }
+
     public ArrayList<MyDatabaseModel> getAllUsers() {
         ArrayList<MyDatabaseModel> userList = new ArrayList<>();
 
