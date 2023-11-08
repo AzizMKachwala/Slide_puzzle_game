@@ -42,8 +42,10 @@ public class HistoryActivity extends AppCompatActivity {
         scoreHistoryRecyclerView = findViewById(R.id.scoreHistoryRecyclerView);
         imgBack = findViewById(R.id.imgBack);
 
+        int UserId = getIntent().getIntExtra("userId",0);
+
         MyDatabaseHandler myDatabaseHandler = new MyDatabaseHandler(HistoryActivity.this);
-//        scoreModels = myDatabaseHandler.getUserHistory(myDatabaseScoreModel.getUserId());
+        scoreModels = myDatabaseHandler.getUserHistory(UserId);
 
         scoreHistoryAdapter = new ScoreHistoryAdapter(HistoryActivity.this,scoreModels);
 

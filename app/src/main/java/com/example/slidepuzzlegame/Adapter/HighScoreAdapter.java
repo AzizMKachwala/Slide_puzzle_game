@@ -37,10 +37,9 @@ public class HighScoreAdapter extends RecyclerView.Adapter<HighScoreAdapter.High
     public void onBindViewHolder(@NonNull HighScoreDataViewHolder holder, int position) {
         MyDatabaseHandler myDatabaseHandler = new MyDatabaseHandler(context);
         MyDatabaseScoreModel myDatabaseScoreModel = scoreModels.get(position);
-        holder.txtUserIdHS.setText(myDatabaseScoreModel.getUserId());
-        holder.txtMovesHS.setText(myDatabaseScoreModel.getMoves());
-        holder.txtTimeTakenHS.setText(myDatabaseScoreModel.getTimeTaken());
-
+        holder.txtUserIdHS.setText(String.valueOf(myDatabaseScoreModel.getUserId()));
+        holder.txtMovesHS.setText(String.valueOf(myDatabaseScoreModel.getMoves()));
+        holder.txtTimeTakenHS.setText(String.valueOf(myDatabaseScoreModel.getTimeTaken()));
     }
 
     @Override

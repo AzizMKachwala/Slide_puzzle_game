@@ -37,8 +37,8 @@ public class ScoreHistoryAdapter extends RecyclerView.Adapter<ScoreHistoryAdapte
 
         MyDatabaseHandler myDatabaseHandler = new MyDatabaseHandler(context);
         MyDatabaseScoreModel myDatabaseScoreModel = scoreModels.get(position);
-        holder.txtMoves.setText(myDatabaseScoreModel.getMoves());
-        holder.txtTime.setText(myDatabaseScoreModel.getTimeTaken());
+        holder.txtMoves.setText(String.valueOf(myDatabaseScoreModel.getMoves()));
+        holder.txtTime.setText(String.valueOf(myDatabaseScoreModel.getTimeTaken()));
     }
 
     @Override

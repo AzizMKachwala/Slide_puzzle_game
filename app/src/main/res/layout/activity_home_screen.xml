@@ -6,14 +6,19 @@
     android:layout_height="match_parent"
     android:background="@color/gray_shade"
     tools:context=".Activity.HomeScreenActivity">
-    
-    <ImageView
-        android:layout_width="@dimen/_40sdp"
+
+    <TextView
+        android:layout_width="match_parent"
         android:layout_height="@dimen/_40sdp"
-        android:background="@color/blue"
+        android:text="USER LIST"
+        android:gravity="center"
         android:layout_marginStart="@dimen/_10sdp"
         android:layout_marginTop="@dimen/_10sdp"
-        android:src="@drawable/logo"/>
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:textStyle="bold"
+        android:textSize="@dimen/_20ssp"
+        android:layout_toStartOf="@id/btnHighScore"/>
 
     <Button
         android:id="@+id/btnHighScore"
@@ -39,6 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
+            android:padding="@dimen/_5sdp"
             android:layout_margin="@dimen/_10sdp" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

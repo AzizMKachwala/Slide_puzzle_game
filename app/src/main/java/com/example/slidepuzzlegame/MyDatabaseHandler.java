@@ -107,7 +107,7 @@ public class MyDatabaseHandler extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getWritableDatabase();
 
-        String query = "SELECT * FROM " + TABLE_SCORE + " WHERE " + KEY_USER_ID + " = ?";
+        String query = "SELECT * FROM " + TABLE_SCORE + " WHERE " + KEY_USER_ID + " = ? ORDER BY " + KEY_MOVES;
         Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(userId)});
 
         if (cursor.moveToFirst()) {

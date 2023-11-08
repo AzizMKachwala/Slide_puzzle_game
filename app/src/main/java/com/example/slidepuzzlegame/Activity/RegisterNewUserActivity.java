@@ -62,9 +62,9 @@ public class RegisterNewUserActivity extends AppCompatActivity {
                 if (!etvUserName.getText().toString().trim().isEmpty()) {
                     MyDatabaseHandler myDatabaseHandler = new MyDatabaseHandler(RegisterNewUserActivity.this);
                     myDatabaseHandler.insertData(etvUserName.getText().toString().trim(), currentPhotoPath);
-                    Toast.makeText(RegisterNewUserActivity.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterNewUserActivity.this, "User Inserted Successfully", Toast.LENGTH_SHORT).show();
 
-                    Intent intent = new Intent(RegisterNewUserActivity.this, GameScreenActivity.class);
+                    Intent intent = new Intent(RegisterNewUserActivity.this, HomeScreenActivity.class);
                     intent.putExtra("Name", etvUserName.getText().toString().trim());
                     intent.putExtra("ImagePath", currentPhotoPath);
                     startActivity(intent);

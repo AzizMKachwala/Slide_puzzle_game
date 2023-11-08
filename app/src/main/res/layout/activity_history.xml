@@ -17,6 +17,18 @@
         android:layout_marginBottom="@dimen/_10sdp"
         android:src="@drawable/baseline_back_24" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_toEndOf="@id/imgBack"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="@dimen/_20ssp"
+        android:text="User Score History"/>
+
     <LinearLayout
         android:id="@+id/lytHeading"
         android:layout_width="match_parent"
@@ -45,14 +57,42 @@
 
     </LinearLayout>
 
+
+    <LinearLayout
+        android:id="@+id/lytColumnName"
+        android:layout_below="@id/lytHeading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="@dimen/_20ssp"
+            android:text="MOVES"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="@dimen/_20ssp"
+            android:text="TIME (s)"/>
+
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/scoreHistoryRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/lytHeading"
+        android:layout_below="@id/lytColumnName"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_10sdp"
         android:layout_marginEnd="@dimen/_10sdp"
         android:layout_marginBottom="@dimen/_10sdp"
         android:padding="@dimen/_5sdp" />

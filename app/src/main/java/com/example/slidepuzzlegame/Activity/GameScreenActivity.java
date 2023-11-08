@@ -85,12 +85,12 @@ public class GameScreenActivity extends AppCompatActivity {
             }
         });
 
-        btnSolve.setVisibility(View.GONE);
+//        btnSolve.setVisibility(View.GONE);
         btnSolve.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                solvePuzzle();
-                Toast.makeText(GameScreenActivity.this, "Solved", Toast.LENGTH_SHORT).show();
+                solvePuzzle();
+//                Toast.makeText(GameScreenActivity.this, "Solved", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -161,37 +161,37 @@ public class GameScreenActivity extends AppCompatActivity {
 
     }
 
-//    private void solvePuzzle() {
-//        for (int i = 0; i < tiles.length - 1; i++) {
-//            tiles[i] = i + 1;
-//        }
-//
-//        // Set the last element to 0 (empty block)
-//        tiles[tiles.length - 1] = 0;
-//
-//        loadDataToView();
-//
-//        myDatabaseHandler = new MyDatabaseHandler(GameScreenActivity.this);
-//
-////        myDatabaseHandler.insertScore(userId, movesCount, timeCount);
-//
-//        Toast.makeText(this, "Congratulations...\nMoves : " + movesCount + "\nTime Taken : " + timeCount + " Second(s)", Toast.LENGTH_SHORT).show();
-//
-//        // Reset counters and timers
-//        movesCount = 0;
-//        txtMovesCount.setText("Moves: 0");
-//        timeCount = 0;
-//        txtTimeCount.setText("Time: 00:00");
-//
-//        if (timer != null) {
-//            timer.cancel();
-//        }
-//
-//        isFirstMove = true;
-//        btnShuffle.setEnabled(false);
-//        btnPause.setEnabled(false);
-//
-//    }
+    private void solvePuzzle() {
+        for (int i = 0; i < tiles.length - 1; i++) {
+            tiles[i] = i + 1;
+        }
+
+        // Set the last element to 0 (empty block)
+        tiles[tiles.length - 1] = 0;
+
+        loadDataToView();
+
+        myDatabaseHandler = new MyDatabaseHandler(GameScreenActivity.this);
+
+//        myDatabaseHandler.insertScore(userId, movesCount, timeCount);
+
+        checkWin();
+
+        // Reset counters and timers
+        movesCount = 0;
+        txtMovesCount.setText("Moves: 0");
+        timeCount = 0;
+        txtTimeCount.setText("Time: 00:00");
+
+        if (timer != null) {
+            timer.cancel();
+        }
+
+        isFirstMove = true;
+        btnShuffle.setEnabled(false);
+        btnPause.setEnabled(false);
+
+    }
 
     private void loadViews() {
         buttons = new Button[3][3];
@@ -325,6 +325,7 @@ public class GameScreenActivity extends AppCompatActivity {
     }
 
     private void checkWin() {
+        myDatabaseHandler = new MyDatabaseHandler(GameScreenActivity.this);
         boolean isWin = false;
         if (emptyX == 2 && emptyY == 2) {
             for (int i = 0; i < gridGroup.getChildCount() - 1; i++) {
@@ -337,14 +338,20 @@ public class GameScreenActivity extends AppCompatActivity {
             }
         }
         if (isWin) {
-            Toast.makeText(this, "Win!!!/nMoves: " + movesCount, Toast.LENGTH_SHORT).show();
+
+            Toast.makeText(this, "Win!!!\nMoves: " + movesCount + "\nTime Taken: " + timeCount, Toast.LENGTH_SHORT).show();
+            String UserName = txtUserNameGot.getText().toString();
+            int UserId = getIntent().getIntExtra("userId",0);
+//            Toast.makeText(this, "UserName: "+ UserName + UserId, Toast.LENGTH_SHORT).show();
+            myDatabaseHandler.insertScore(UserId, movesCount, timeCount);
+
             for (int i = 0; i < gridGroup.getChildCount(); i++) {
                 buttons[i / 3][i % 3].setClickable(false);
                 timer.cancel();
                 btnPause.setEnabled(false);
                 btnShuffle.setEnabled(false);
+                btnSolve.setEnabled(false);
             }
         }
     }
-
 }

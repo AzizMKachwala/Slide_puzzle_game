@@ -8,20 +8,61 @@
     tools:context=".Activity.HighScoreActivity">
 
     <TextView
+        android:id="@+id/txtHeading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="HIGH SCORE LIST"
-        android:textStyle="bold"
-        android:layout_above="@id/highScoreRecyclerView"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_margin="@dimen/_10sdp"
-        android:textSize="@dimen/_30sdp"/>
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:text="HIGH SCORE LIST"
+        android:textSize="@dimen/_30sdp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:id="@+id/lytColumnName"
+        android:layout_below="@id/txtHeading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="@dimen/_20ssp"
+            android:text="UID"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="@dimen/_20ssp"
+            android:text="MOVES"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="@dimen/_20ssp"
+            android:text="TIME (s)"/>
+
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/highScoreRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_below="@id/lytColumnName"
+        android:layout_above="@id/btnClose"
         android:layout_marginStart="@dimen/_10sdp"
         android:layout_marginTop="@dimen/_10sdp"
         android:layout_marginEnd="@dimen/_10sdp"
@@ -32,7 +73,9 @@
         android:id="@+id/btnClose"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/highScoreRecyclerView"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/_70sdp"
+        android:layout_marginTop="@dimen/_10sdp"
         android:text="CLOSE"
         style="@style/btn"
         android:layout_centerHorizontal="true"/>
