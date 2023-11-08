@@ -1,5 +1,6 @@
 package com.example.slidepuzzlegame.Adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,9 +9,21 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.slidepuzzlegame.MyDatabaseHandler;
+import com.example.slidepuzzlegame.MyDatabaseScoreModel;
 import com.example.slidepuzzlegame.R;
 
+import java.util.ArrayList;
+
 public class HighScoreAdapter extends RecyclerView.Adapter<HighScoreAdapter.HighScoreDataViewHolder> {
+
+    Context context;
+    ArrayList<MyDatabaseScoreModel> scoreModels;
+
+    public HighScoreAdapter(Context context, ArrayList<MyDatabaseScoreModel> scoreModels) {
+        this.context = context;
+        this.scoreModels = scoreModels;
+    }
 
     @NonNull
     @Override
@@ -22,23 +35,33 @@ public class HighScoreAdapter extends RecyclerView.Adapter<HighScoreAdapter.High
 
     @Override
     public void onBindViewHolder(@NonNull HighScoreDataViewHolder holder, int position) {
+        MyDatabaseHandler myDatabaseHandler = new MyDatabaseHandler(context);
+        MyDatabaseScoreModel myDatabaseScoreModel = scoreModels.get(position);
+        holder.txtUserIdHS.setText(myDatabaseScoreModel.getUserId());
+        holder.txtMovesHS.setText(myDatabaseScoreModel.getMoves());
+        holder.txtTimeTakenHS.setText(myDatabaseScoreModel.getTimeTaken());
 
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        if (scoreModels != null) {
+            return scoreModels.size();
+        } else {
+            return 0;
+        }
     }
 
     public static class HighScoreDataViewHolder extends RecyclerView.ViewHolder {
 
-        TextView txtUserNameHS, txtScoreHS;
+        TextView txtUserIdHS, txtMovesHS,txtTimeTakenHS;
 
         public HighScoreDataViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            txtUserNameHS = itemView.findViewById(R.id.txtUserNameHS);
-            txtScoreHS = itemView.findViewById(R.id.txtScoreHS);
+            txtUserIdHS = itemView.findViewById(R.id.txtUserIdHS);
+            txtMovesHS = itemView.findViewById(R.id.txtMovesHS);
+            txtTimeTakenHS = itemView.findViewById(R.id.txtTimeTakenHS);
 
         }
     }

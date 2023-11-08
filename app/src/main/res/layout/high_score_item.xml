@@ -6,25 +6,35 @@
     android:orientation="horizontal">
 
     <TextView
-        android:id="@+id/txtUserNameHS"
+        android:id="@+id/txtUserIdHS"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textSize="@dimen/_20sdp"
         android:layout_weight="1"
-        android:textStyle="bold"
+        android:hint="USERID"
         android:paddingStart="@dimen/_10sdp"
-        android:hint="USERNAME" />
+        android:textSize="@dimen/_20sdp"
+        android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/txtScoreHS"
+        android:id="@+id/txtMovesHS"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textSize="@dimen/_20sdp"
         android:layout_weight="1"
         android:gravity="end"
-        android:textStyle="bold"
+        android:hint="MOVES"
         android:paddingEnd="@dimen/_10sdp"
-        android:hint="SCORE" />
+        android:textSize="@dimen/_20sdp"
+        android:textStyle="bold" />
 
+    <TextView
+        android:id="@+id/txtTimeTakenHS"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="end"
+        android:hint="TIME"
+        android:paddingEnd="@dimen/_10sdp"
+        android:textSize="@dimen/_20sdp"
+        android:textStyle="bold" />
 
 </LinearLayout>

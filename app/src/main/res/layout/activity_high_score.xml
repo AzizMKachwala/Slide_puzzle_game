@@ -7,6 +7,16 @@
     android:background="@color/gray_shade"
     tools:context=".Activity.HighScoreActivity">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="HIGH SCORE LIST"
+        android:textStyle="bold"
+        android:layout_above="@id/highScoreRecyclerView"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/_10sdp"
+        android:textSize="@dimen/_30sdp"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/highScoreRecyclerView"
         android:layout_width="match_parent"

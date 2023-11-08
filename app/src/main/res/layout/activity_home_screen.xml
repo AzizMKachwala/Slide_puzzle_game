@@ -6,6 +6,14 @@
     android:layout_height="match_parent"
     android:background="@color/gray_shade"
     tools:context=".Activity.HomeScreenActivity">
+    
+    <ImageView
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:background="@color/blue"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:src="@drawable/logo"/>
 
     <Button
         android:id="@+id/btnHighScore"
