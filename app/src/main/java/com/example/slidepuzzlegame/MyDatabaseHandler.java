@@ -84,7 +84,6 @@ public class MyDatabaseHandler extends SQLiteOpenHelper {
         String query = "SELECT * FROM " + TABLE_SCORE + " ORDER BY " + KEY_MOVES + " ASC LIMIT ?";
         Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(Limit)});
 
-
         if (cursor.moveToFirst()) {
             do {
                 @SuppressLint("Range") int scoreId = cursor.getInt(cursor.getColumnIndex(KEY_SCORE_ID));

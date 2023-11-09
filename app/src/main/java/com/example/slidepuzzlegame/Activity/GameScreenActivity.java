@@ -6,7 +6,11 @@ import androidx.core.content.ContextCompat;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
@@ -45,12 +49,14 @@ public class GameScreenActivity extends AppCompatActivity {
     MyDatabaseHandler myDatabaseHandler;
     private boolean isGamePaused = false;
 
+    private MediaPlayer clickSound,winningTune;
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_screen);
+
 
         tools = new Tools(GameScreenActivity.this);
 
@@ -136,6 +142,8 @@ public class GameScreenActivity extends AppCompatActivity {
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+//                        btnShuffle.setBackground(new ColorDrawable(getResources().getColor(R.color.black)));
+//                        updateButtonColor();
                         Toast.makeText(GameScreenActivity.this, "YES CLICKED", Toast.LENGTH_SHORT).show();
                         dialogInterface.dismiss();
                     }
@@ -159,7 +167,18 @@ public class GameScreenActivity extends AppCompatActivity {
         generateNumbers();
         loadDataToView();
 
+        clickSound = MediaPlayer.create(this, R.raw.click_sound);
+        winningTune = MediaPlayer.create(this, R.raw.winning_tune);
     }
+
+//    private void updateButtonColor() {
+//        for (int i = 0; i < gridGroup.getChildCount(); i++) {
+//            int x = i / 3;
+//            int y = i % 3;
+//            btnShuffle.setBackgroundColor(getResources().getColor(R.color.black)); // Change to your desired color
+//            Toast.makeText(this, "colored", Toast.LENGTH_SHORT).show();
+//        }
+//    }
 
     private void solvePuzzle() {
         for (int i = 0; i < tiles.length - 1; i++) {
@@ -315,7 +334,26 @@ public class GameScreenActivity extends AppCompatActivity {
                 movesCount++;
                 txtMovesCount.setText(String.valueOf(movesCount));
                 checkWin();
+
+                playClickSound();
             }
+        }
+    }
+
+    private void playClickSound() {
+        if (clickSound != null) {
+            clickSound.start();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (clickSound != null) {
+            clickSound.release();
+        }
+        if (winningTune != null) {
+            winningTune.release();
         }
     }
 
@@ -333,9 +371,8 @@ public class GameScreenActivity extends AppCompatActivity {
             }
         }
         if (isWin) {
-
             Toast.makeText(this, "Win!!!\nMoves: " + movesCount + "\nTime Taken: " + timeCount, Toast.LENGTH_SHORT).show();
-            int UserId = getIntent().getIntExtra("userId",0);
+            int UserId = getIntent().getIntExtra("userId", 0);
             myDatabaseHandler.insertScore(UserId, movesCount, timeCount);
 
             for (int i = 0; i < gridGroup.getChildCount(); i++) {
@@ -363,6 +400,12 @@ public class GameScreenActivity extends AppCompatActivity {
                 dialog.show();
 
             }
+            playWinningTune();
+        }
+    }
+    private void playWinningTune() {
+        if (winningTune != null) {
+            winningTune.start();
         }
     }
 }
