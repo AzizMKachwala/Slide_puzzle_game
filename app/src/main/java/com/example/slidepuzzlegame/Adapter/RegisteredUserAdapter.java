@@ -91,8 +91,7 @@ public class RegisteredUserAdapter extends RecyclerView.Adapter<RegisteredUserAd
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, HistoryActivity.class);
-                int userId = myDatabaseModel.getId();
-                intent.putExtra("userId", userId);
+                intent.putExtra("userId", myDatabaseModel.getId());
                 intent.putExtra("Name", myDatabaseModel.getName());
                 intent.putExtra("ImagePath", myDatabaseModel.getImage());
                 context.startActivity(intent);

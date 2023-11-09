@@ -351,6 +351,24 @@ public class GameScreenActivity extends AppCompatActivity {
                 btnPause.setEnabled(false);
                 btnShuffle.setEnabled(false);
                 btnSolve.setEnabled(false);
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(GameScreenActivity.this);
+                builder.setTitle("SOLVED");
+                builder.setMessage("CONGRATULATIONS, YOU HAVE SOLVED THE PUZZLE.");
+                builder.setCancelable(false);
+
+                builder.setPositiveButton("DONE", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        Toast.makeText(GameScreenActivity.this, "YES CLICKED", Toast.LENGTH_SHORT).show();
+                        finish();
+                        dialogInterface.dismiss();
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
             }
         }
     }

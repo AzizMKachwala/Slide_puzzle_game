@@ -37,7 +37,7 @@ public class HighScoreActivity extends AppCompatActivity {
 
         myDatabaseHandler = new MyDatabaseHandler(HighScoreActivity.this);
 
-        scoreModels = myDatabaseHandler.getAllScores();
+        scoreModels = myDatabaseHandler.getAllScores(50);
         highScoreAdapter = new HighScoreAdapter(HighScoreActivity.this, scoreModels);
 
         btnClose.setOnClickListener(new View.OnClickListener() {

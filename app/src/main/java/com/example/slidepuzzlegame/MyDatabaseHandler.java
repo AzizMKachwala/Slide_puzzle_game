@@ -76,13 +76,14 @@ public class MyDatabaseHandler extends SQLiteOpenHelper {
         db.close();
     }
 
-    public ArrayList<MyDatabaseScoreModel> getAllScores() {
+    public ArrayList<MyDatabaseScoreModel> getAllScores(int Limit) {
         ArrayList<MyDatabaseScoreModel> scoreList = new ArrayList<>();
 
         SQLiteDatabase db = this.getWritableDatabase();
 
-        String query = "SELECT * FROM " + TABLE_SCORE;
-        Cursor cursor = db.rawQuery(query, null);
+        String query = "SELECT * FROM " + TABLE_SCORE + " ORDER BY " + KEY_MOVES + " ASC LIMIT ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(Limit)});
+
 
         if (cursor.moveToFirst()) {
             do {
