@@ -10,9 +10,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.slidepuzzlegame.Adapter.HighScoreAdapter;
-import com.example.slidepuzzlegame.Adapter.RegisteredUserAdapter;
 import com.example.slidepuzzlegame.MyDatabaseHandler;
-import com.example.slidepuzzlegame.MyDatabaseModel;
 import com.example.slidepuzzlegame.MyDatabaseScoreModel;
 import com.example.slidepuzzlegame.R;
 

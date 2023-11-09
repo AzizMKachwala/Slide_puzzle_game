@@ -170,11 +170,6 @@ public class GameScreenActivity extends AppCompatActivity {
         tiles[tiles.length - 1] = 0;
 
         loadDataToView();
-
-        myDatabaseHandler = new MyDatabaseHandler(GameScreenActivity.this);
-
-//        myDatabaseHandler.insertScore(userId, movesCount, timeCount);
-
         checkWin();
 
         // Reset counters and timers
@@ -340,9 +335,7 @@ public class GameScreenActivity extends AppCompatActivity {
         if (isWin) {
 
             Toast.makeText(this, "Win!!!\nMoves: " + movesCount + "\nTime Taken: " + timeCount, Toast.LENGTH_SHORT).show();
-            String UserName = txtUserNameGot.getText().toString();
             int UserId = getIntent().getIntExtra("userId",0);
-//            Toast.makeText(this, "UserName: "+ UserName + UserId, Toast.LENGTH_SHORT).show();
             myDatabaseHandler.insertScore(UserId, movesCount, timeCount);
 
             for (int i = 0; i < gridGroup.getChildCount(); i++) {
