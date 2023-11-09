@@ -85,7 +85,7 @@ public class GameScreenActivity extends AppCompatActivity {
             }
         });
 
-//        btnSolve.setVisibility(View.GONE);
+        btnSolve.setVisibility(View.GONE);
         btnSolve.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -174,9 +174,9 @@ public class GameScreenActivity extends AppCompatActivity {
 
         // Reset counters and timers
         movesCount = 0;
-        txtMovesCount.setText("Moves: 0");
+        txtMovesCount.setText("00");
         timeCount = 0;
-        txtTimeCount.setText("Time: 00:00");
+        txtTimeCount.setText("00:00");
 
         if (timer != null) {
             timer.cancel();
@@ -223,7 +223,7 @@ public class GameScreenActivity extends AppCompatActivity {
                 int second = timeCount % 60;
                 int minute = timeCount / 60;
 
-                txtTimeCount.setText(String.format("Time: %02d:%02d", minute, second));
+                txtTimeCount.setText(String.format("%02d:%02d", minute, second));
             }
         });
     }
@@ -313,7 +313,7 @@ public class GameScreenActivity extends AppCompatActivity {
                 emptyX = x;
                 emptyY = y;
                 movesCount++;
-                txtMovesCount.setText("Moves: " + movesCount);
+                txtMovesCount.setText(String.valueOf(movesCount));
                 checkWin();
             }
         }

@@ -1,27 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="@dimen/_5sdp">
 
-    <TextView
-        android:id="@+id/txtMoves"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/_30sdp"
-        android:layout_weight="1"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:textSize="@dimen/_20ssp"
-        android:hint="Moves"/>
+    <LinearLayout
+        style="@style/btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/txtTime"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/_30sdp"
-        android:layout_weight="1"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:textSize="@dimen/_20ssp"
-        android:hint="TIME"/>
+        <TextView
+            android:id="@+id/txtMoves"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:hint="Moves"
+            android:textSize="@dimen/_20ssp" />
 
+        <TextView
+            android:id="@+id/txtTime"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:hint="TIME"
+            android:textSize="@dimen/_20ssp" />
+
+    </LinearLayout>
 </LinearLayout>

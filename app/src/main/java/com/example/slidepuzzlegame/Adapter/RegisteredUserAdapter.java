@@ -46,12 +46,14 @@ public class RegisteredUserAdapter extends RecyclerView.Adapter<RegisteredUserAd
         return new RegisteredUserDataViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull RegisteredUserDataViewHolder holder, @SuppressLint("RecyclerView") int position) {
         tools = new Tools(context);
         MyDatabaseHandler myDatabaseHandler = new MyDatabaseHandler(holder.itemView.getContext());
         MyDatabaseModel myDatabaseModel = dataModelList.get(position);
-        holder.txtUserName.setText(myDatabaseModel.getName());
+//        holder.txtUserId.setText(String.valueOf(myDatabaseModel.getId()));
+        holder.txtUserName.setText(myDatabaseModel.getName() + "(" +String.valueOf(myDatabaseModel.getId()) + ")");
         Tools.DisplayImage(context, holder.imgUserPhoto, myDatabaseModel.getImage());
 
         holder.imgDelete.setOnClickListener(new View.OnClickListener() {
@@ -120,6 +122,7 @@ public class RegisteredUserAdapter extends RecyclerView.Adapter<RegisteredUserAd
         public RegisteredUserDataViewHolder(@NonNull View itemView) {
             super(itemView);
 
+//            txtUserId = itemView.findViewById(R.id.txtUserId);
             txtUserName = itemView.findViewById(R.id.txtUserName);
             imgUserPhoto = itemView.findViewById(R.id.imgUserPhoto);
             imgDelete = itemView.findViewById(R.id.imgDelete);
