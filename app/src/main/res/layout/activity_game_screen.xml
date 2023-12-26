@@ -44,7 +44,7 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imgUserImageGot"
-                android:layout_width="@dimen/_40sdp"
+                android:layout_width="48dp"
                 android:layout_height="match_parent"
                 android:src="@drawable/user_icon"
                 app:civ_border_color="#FF000000"
